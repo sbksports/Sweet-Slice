@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function AdminPortal() {
   // ==========================================
@@ -518,6 +519,21 @@ export default function AdminPortal() {
           border: 1px solid var(--glass-border);
           display: block;
         }
+        .admin-order-details-grid {
+          display: grid;
+          grid-template-columns: 1fr 1.3fr;
+          gap: 2.5rem;
+        }
+        .admin-enquiry-card {
+          background: white;
+          border-radius: 16px;
+          border: 1px solid var(--glass-border);
+          padding: 1.8rem;
+          box-shadow: var(--shadow-sm);
+          display: flex;
+          gap: 1.5rem;
+          align-items: flex-start;
+        }
         @media (max-width: 900px) {
           .admin-crud-layout {
             grid-template-columns: 1fr;
@@ -526,6 +542,22 @@ export default function AdminPortal() {
             flex-direction: column;
             gap: 1rem;
             text-align: center;
+          }
+        }
+        @media (max-width: 768px) {
+          .admin-order-details-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          .admin-nav-tabs {
+            justify-content: center;
+            width: 100%;
+          }
+        }
+        @media (max-width: 576px) {
+          .admin-enquiry-card {
+            flex-direction: column;
+            gap: 1rem;
           }
         }
       `}</style>
@@ -549,10 +581,12 @@ export default function AdminPortal() {
             maxWidth: "400px",
             textAlign: "center"
           }}>
-            <img 
-              src="../assets/logo.jpg" 
+            <Image 
+              src="/assets/logo.jpg" 
               alt="Brand Logo" 
-              style={{ width: "80px", height: "80px", borderRadius: "50%", margin: "0 auto 1.5rem auto", border: "3px solid var(--primary)" }} 
+              width={80} 
+              height={80} 
+              style={{ borderRadius: "50%", margin: "0 auto 1.5rem auto", border: "3px solid var(--primary)", objectFit: "cover" }} 
             />
             <h2 style={{ fontFamily: "var(--font-heading)", color: "var(--text-dark)", fontSize: "1.8rem", marginBottom: "0.5rem" }}>Sweet Slice</h2>
             <span style={{ fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "1.5px", color: "var(--primary)", fontWeight: 700, display: "block", marginBottom: "2rem" }}>Admin Access Portal</span>
@@ -600,7 +634,7 @@ export default function AdminPortal() {
           <nav className="admin-nav">
             <div className="container admin-nav-container">
               <a href="/" style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-                <img src="../assets/logo.jpg" alt="Logo" style={{ height: "40px", width: "40px", borderRadius: "50%", border: "2px solid white" }} />
+                <Image src="/assets/logo.jpg" alt="Logo" width={40} height={40} style={{ borderRadius: "50%", border: "2px solid white", objectFit: "cover" }} />
                 <span style={{ fontWeight: 700, fontSize: "1.15rem", letterSpacing: "0.5px" }}>Sweet Slice Admin</span>
               </a>
           
@@ -849,7 +883,7 @@ export default function AdminPortal() {
                         onChange={handleImageFileChange} 
                       />
                       {imagePreview && (
-                        <img src={imagePreview} alt="Preview" className="admin-preview-thumb" />
+                        <Image src={imagePreview} alt="Preview" className="admin-preview-thumb" width={80} height={80} unoptimized={true} />
                       )}
                     </label>
                   </div>
@@ -895,10 +929,13 @@ export default function AdminPortal() {
                         key={product.id} 
                         style={{ display: "flex", gap: "1rem", background: "white", padding: "1rem", borderRadius: "12px", border: "1px solid var(--glass-border)", alignItems: "center" }}
                       >
-                        <img 
-                          src={product.image} 
+                        <Image 
+                          src={product.image.startsWith("data:") ? product.image : `/${product.image}`} 
                           alt={product.name} 
-                          style={{ width: "65px", height: "65px", borderRadius: "8px", objectFit: "cover", border: "1px solid var(--primary-light)" }} 
+                          width={65} 
+                          height={65} 
+                          style={{ borderRadius: "8px", objectFit: "cover", border: "1px solid var(--primary-light)" }} 
+                          unoptimized={product.image.startsWith("data:")}
                         />
                         <div style={{ flexGrow: 1 }}>
                           <h4 style={{ fontSize: "1rem", fontWeight: 700 }}>{product.name}</h4>
@@ -1009,7 +1046,7 @@ export default function AdminPortal() {
                       </div>
 
                       {/* Customer Info & Items columns */}
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: "2.5rem" }}>
+                      <div className="admin-order-details-grid">
                         
                         {/* Customer Details block */}
                         <div>
@@ -1084,7 +1121,7 @@ export default function AdminPortal() {
                   {enquiries.slice().reverse().map(enq => (
                     <div 
                       key={enq.id}
-                      style={{ background: "white", borderRadius: "16px", border: "1px solid var(--glass-border)", padding: "1.8rem", boxShadow: "var(--shadow-sm)", display: "flex", gap: "1.5rem", alignItems: "flex-start" }}
+                      className="admin-enquiry-card"
                     >
                       <div style={{ width: "45px", height: "45px", borderRadius: "50%", backgroundColor: "var(--primary-light)", color: "var(--primary)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <i className="fa-solid fa-paper-plane" style={{ width: "45px", height: "45px", borderRadius: "50%", backgroundColor: "var(--primary-light)", color: "var(--primary)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "1.1rem" }}></i>

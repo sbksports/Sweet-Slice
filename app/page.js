@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 // Color maps for dynamic preview rendering
 const FLAVOR_COLORS = {
@@ -357,7 +358,7 @@ export default function Home() {
       <header id="header" className={scrolled ? "scrolled" : ""}>
         <div className="header-container">
           <a href="#home" className="logo-wrapper">
-            <img src="assets/logo.jpg" alt="Sweet Slice By Suma Logo" className="logo-img" />
+            <Image src="/assets/logo.jpg" alt="Sweet Slice By Suma Logo" className="logo-img" width={50} height={50} />
             <div className="logo-text">
               <span className="logo-title">Sweet Slice</span>
               <span className="logo-subtitle">By Suma</span>
@@ -413,7 +414,7 @@ export default function Home() {
             <div className="hero-image-container">
               <div className="hero-circle-bg"></div>
               <div className="hero-img-wrapper">
-                <img src="assets/birthday_rose.png" alt="Featured Birthday Cake" className="hero-img" />
+                <Image src="/assets/birthday_rose.png" alt="Featured Birthday Cake" className="hero-img" width={420} height={420} priority />
               </div>
               <div className="floating-badge floating-badge-1">
                 <div className="badge-icon-circle">
@@ -442,8 +443,8 @@ export default function Home() {
           <div className="container about-grid">
             <div className="about-images">
               <div className="about-decor"></div>
-              <img src="assets/logo.jpg" alt="Sweet Slice Logo" className="about-img-main" />
-              <img src="assets/fudge_pots.jpg" alt="Dessert Pots Table" className="about-img-sub" />
+              <Image src="/assets/logo.jpg" alt="Sweet Slice Logo" className="about-img-main" width={450} height={450} />
+              <Image src="/assets/fudge_pots.jpg" alt="Dessert Pots Table" className="about-img-sub" width={240} height={240} />
             </div>
             
             <div className="about-content">
@@ -513,7 +514,15 @@ export default function Home() {
                 .map(product => (
                   <div className="product-card" key={product.id}>
                     <div className="product-img-wrapper">
-                      <img src={product.image} alt={product.name} className="product-img" />
+                      <Image 
+                        src={product.image.startsWith("data:") ? product.image : `/${product.image}`} 
+                        alt={product.name} 
+                        className="product-img" 
+                        width={350} 
+                        height={240} 
+                        style={{ objectFit: "cover" }} 
+                        unoptimized={product.image.startsWith("data:")} 
+                      />
                       {product.badge && (
                         <div className="product-badges">
                           <span className="badge-health">
@@ -784,7 +793,7 @@ export default function Home() {
                     "The Rose Gold Birthday cake was an absolute showstopper for Piu's birthday! It was so soft, not overly sweet, and the chocolate taste was incredibly rich. Everyone asked where we got it. Thank you, Suma!"
                   </blockquote>
                   <div className="testimonial-author-group">
-                    <img src="assets/logo.jpg" alt="Sharmin Akter" className="testimonial-avatar" />
+                    <Image src="/assets/logo.jpg" alt="Sharmin Akter" className="testimonial-avatar" width={60} height={60} />
                     <span className="testimonial-name">Sharmin Akter</span>
                     <span className="testimonial-rating" style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Verified Buyer</span>
                   </div>
@@ -803,7 +812,7 @@ export default function Home() {
                     "I have diabetes and finding good cake is so hard. The Pistachio Garden cake with Stevia was phenomenal! Finally, a bakery that looks out for healthy life choices without sacrificing taste. Outstanding service."
                   </blockquote>
                   <div className="testimonial-author-group">
-                    <img src="assets/logo.jpg" alt="Saad Rahman" className="testimonial-avatar" />
+                    <Image src="/assets/logo.jpg" alt="Saad Rahman" className="testimonial-avatar" width={60} height={60} />
                     <span className="testimonial-name">Saad Rahman</span>
                     <span className="testimonial-rating" style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Healthy Diet Enthusiast</span>
                   </div>
@@ -822,7 +831,7 @@ export default function Home() {
                     "We ordered the Vanilla Mango Custard Cups and the Choco-Fudge pudding pots for a home gathering. My guests were completely wowed by the presentation and fresh flavours. Everything tastes premium."
                   </blockquote>
                   <div className="testimonial-author-group">
-                    <img src="assets/logo.jpg" alt="Tasmia Kabir" className="testimonial-avatar" />
+                    <Image src="/assets/logo.jpg" alt="Tasmia Kabir" className="testimonial-avatar" width={60} height={60} />
                     <span className="testimonial-name">Tasmia Kabir</span>
                     <span className="testimonial-rating" style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Home Party Host</span>
                   </div>
@@ -952,7 +961,15 @@ export default function Home() {
           ) : (
             cart.map((item, index) => (
               <div className="cart-item" key={item.id}>
-                <img src={item.image} alt={item.name} className="cart-item-img" />
+                <Image 
+                  src={item.image.startsWith("data:") ? item.image : `/${item.image}`} 
+                  alt={item.name} 
+                  className="cart-item-img" 
+                  width={70} 
+                  height={70} 
+                  style={{ objectFit: "cover" }} 
+                  unoptimized={item.image.startsWith("data:")} 
+                />
                 <div className="cart-item-details">
                   <span className="cart-item-title">{item.name}</span>
                   {item.specs && item.specs.length > 0 && (
@@ -1116,7 +1133,7 @@ export default function Home() {
         <div className="container footer-grid">
           <div className="footer-brand">
             <div className="footer-logo-wrapper">
-              <img src="assets/logo.jpg" alt="Sweet Slice Logo" className="footer-logo-img" />
+              <Image src="/assets/logo.jpg" alt="Sweet Slice Logo" className="footer-logo-img" width={48} height={48} />
               <div>
                 <span className="footer-logo-title">Sweet Slice</span><br />
                 <span className="footer-logo-subtitle">By Suma</span>
