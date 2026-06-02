@@ -100,6 +100,34 @@ export default function AdminPortal() {
     if (savedEnquiries) {
       setEnquiries(JSON.parse(savedEnquiries));
     }
+
+    // 4. Live Storage Event Listener for multi-tab sync
+    const handleStorageChange = (e) => {
+      if (e.key === "sweet_slice_orders") {
+        try {
+          setOrders(e.newValue ? JSON.parse(e.newValue) : []);
+        } catch (err) {
+          console.error("Storage sync error", err);
+        }
+      }
+      if (e.key === "sweet_slice_enquiries") {
+        try {
+          setEnquiries(e.newValue ? JSON.parse(e.newValue) : []);
+        } catch (err) {
+          console.error("Storage sync error", err);
+        }
+      }
+      if (e.key === "sweet_slice_products") {
+        try {
+          setProducts(e.newValue ? JSON.parse(e.newValue) : []);
+        } catch (err) {
+          console.error("Storage sync error", err);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   // Sync products back to local storage
